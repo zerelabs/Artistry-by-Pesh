@@ -1,0 +1,152 @@
+.why-us {
+  /* Removed solid background-color so the global brush stroke is visible beneath it */
+  background-image: radial-gradient(circle at right 20%, rgba(169, 112, 255, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at left 80%, rgba(255, 92, 122, 0.05) 0%, transparent 40%);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  perspective: 1200px; /* 3D depth cam feel */
+}
+
+/* Paint Sparkles Parallax Layer */
+.sparkles-container {
+  position: absolute;
+  top: -20%; left: -20%; width: 140%; height: 140%;
+  pointer-events: none;
+  z-index: 1; /* Slightly above blasts */
+  transform-style: preserve-3d;
+  /* Move opposite to the main grid to create massive depth */
+  transform: rotateY(calc(var(--rotY, 0deg) * -0.5)) rotateX(calc(var(--rotX, 0deg) * -0.5)) translateZ(-100px);
+  transition: transform 0.1s ease-out;
+}
+
+.paint-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(1px);
+  animation: twinkle linear infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.3); }
+}
+
+.why-container {
+  position: relative;
+  z-index: 10;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--rotY, 0deg)) rotateX(var(--rotX, 0deg));
+  transition: transform 0.1s ease-out;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 3rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 10;
+  transform-style: preserve-3d;
+}
+
+.why-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.why-item:hover {
+  transform: translateY(-15px) translateZ(30px) rotateX(5deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.why-orb {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 2rem;
+  position: relative;
+  animation: floatOrb 6s ease-in-out infinite;
+}
+
+.why-orb::after {
+  content: '';
+  position: absolute;
+  top: 10%; left: 10%; right: 10%; bottom: 10%;
+  background: var(--color-deep-night);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@keyframes floatOrb {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+.why-content h3 {
+  font-size: 1.5rem;
+  color: var(--color-cream-white);
+  margin-bottom: 1rem;
+}
+
+.why-content p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+.quote-container {
+  margin-top: 8rem;
+  position: relative;
+  text-align: center;
+  padding: 4rem 2rem;
+  z-index: 10;
+}
+
+.quote-brush-bg {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 800px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(255, 92, 122, 0.1), rgba(91, 192, 235, 0.1));
+  filter: blur(40px);
+  z-index: 0;
+  border-radius: 50%;
+}
+
+.quote-container blockquote {
+  font-family: 'Mrs Saint Delafield', cursive, var(--font-heading); /* Fallback */
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--color-cream-white);
+  position: relative;
+  z-index: 1;
+  line-height: 1.3;
+  margin: 0;
+  text-shadow: 0 10px 20px rgba(0,0,0,0.5); /* 3D text shadow */
+  transition: transform 0.5s ease;
+}
+
+.quote-container:hover blockquote {
+  transform: scale(1.05);
+}
+
+.quote-mark {
+  color: var(--color-sunshine-gold);
+  font-size: 1.5em;
+  vertical-align: middle;
+  opacity: 0.5;
+  font-family: var(--font-heading);
+}

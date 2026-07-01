@@ -1,0 +1,70 @@
+.cta-section {
+  position: relative;
+  padding: 8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-deep-night);
+}
+
+.cta-swirl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150vw;
+  height: 150vw;
+  max-width: 1200px;
+  max-height: 1200px;
+  background: conic-gradient(from 0deg, 
+    transparent 0deg, 
+    rgba(255, 92, 122, 0.1) 60deg, 
+    transparent 120deg, 
+    rgba(255, 200, 87, 0.1) 180deg, 
+    transparent 240deg, 
+    rgba(169, 112, 255, 0.1) 300deg, 
+    transparent 360deg
+  );
+  border-radius: 50%;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  padding: 4rem 2rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.cta-content p {
+  font-size: 1.25rem;
+  color: rgba(255, 248, 240, 0.8);
+  margin-bottom: 3rem;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .cta-buttons {
+    flex-direction: column;
+  }
+}

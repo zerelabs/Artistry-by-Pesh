@@ -1,0 +1,119 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 0;
+  z-index: 1000; /* Ensure header stays on top of all 3D content */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  perspective: 1000px;
+}
+
+.header.scrolled {
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateZ(50px); /* Brings the entire header slightly forward in 3D space */
+}
+
+.header-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.logo:hover {
+  transform: translateZ(20px) rotateX(5deg) rotateY(5deg);
+  text-shadow: 0 10px 15px rgba(0,0,0,0.3);
+}
+
+.header-logo-img {
+  height: 50px; /* Keep it nicely sized in the header */
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  transform-style: preserve-3d;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 248, 240, 0.7);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--color-cream-white);
+  transform: translateZ(25px) translateY(-2px);
+  text-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-coral-pink);
+  transform: scaleX(0) translateZ(-5px); /* Underline sits slightly behind text in 3D */
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px var(--color-coral-pink); /* Glowing neon edge */
+}
+
+.nav-links a:hover::after, .nav-links a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Light Theme Overrides for Home Page */
+.header-light {
+  background: transparent;
+}
+
+.header-light.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header-light .logo-text h2,
+.header-light .logo-text p,
+.header-light .nav-links a {
+  color: #0A0A0A;
+}
+
+.header-light .nav-links a:hover,
+.header-light .nav-links a.active {
+  color: var(--color-coral-pink);
+  transform: translateZ(25px) translateY(-2px);
+  text-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.header-light .logo-ap {
+  background: var(--color-coral-pink);
+  color: #fff;
+}

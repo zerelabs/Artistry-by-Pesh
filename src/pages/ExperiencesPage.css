@@ -1,0 +1,214 @@
+.experiences-page {
+  background-color: #050505; /* Deep black for the luxurious feel */
+  padding-top: 120px;
+  min-height: 100vh;
+}
+
+.exp-page-header {
+  text-align: center;
+  padding: 4rem 2rem 6rem;
+}
+
+.exp-page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.exp-page-header p {
+  color: rgba(255, 248, 240, 0.6);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Row Layout */
+.exp-row {
+  display: flex;
+  min-height: 70vh;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.exp-text-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 4rem 8rem;
+  z-index: 2;
+}
+
+.exp-text-content {
+  max-width: 500px;
+}
+
+.exp-image-col {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.exp-image-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8; /* Slight dimming to match mood */
+}
+
+/* Gradient blending masks */
+.img-overlay-left,
+.img-overlay-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Row Ordering for Zig-Zag */
+.row-even {
+  flex-direction: row;
+}
+
+.row-even .img-overlay-left {
+  left: 0;
+  background: linear-gradient(to right, #050505 0%, transparent 100%);
+}
+.row-even .img-overlay-right {
+  right: 0;
+  background: linear-gradient(to left, #050505 0%, transparent 100%);
+}
+
+.row-odd {
+  flex-direction: row-reverse;
+}
+
+.row-odd .exp-text-col {
+  justify-content: flex-end;
+}
+
+.row-odd .img-overlay-left {
+  left: 0;
+  background: linear-gradient(to right, #050505 0%, transparent 100%);
+}
+.row-odd .img-overlay-right {
+  right: 0;
+  background: linear-gradient(to left, #050505 0%, transparent 100%);
+}
+
+/* Typography Inside Row */
+.exp-overline {
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.exp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 4vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--color-cream-white);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.exp-desc {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 248, 240, 0.7);
+  margin-bottom: 2rem;
+}
+
+.exp-details {
+  margin-bottom: 3rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exp-details p {
+  font-size: 0.85rem;
+  color: rgba(255, 248, 240, 0.5);
+  margin-bottom: 0.5rem;
+}
+.exp-action-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.exp-price {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.exp-btn {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-cream-white);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.exp-btn:hover {
+  background: var(--color-cream-white);
+  color: #050505;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .exp-text-col {
+    padding: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .exp-row, .row-odd, .row-even {
+    flex-direction: column-reverse;
+    min-height: auto;
+  }
+
+  .exp-image-col {
+    height: 40vh;
+  }
+
+  .img-overlay-left, .img-overlay-right {
+    width: 100%;
+    height: 100px;
+  }
+  
+  .img-overlay-left {
+    bottom: 0;
+    top: auto;
+    background: linear-gradient(to top, #050505 0%, transparent 100%) !important;
+  }
+  
+  .img-overlay-right {
+    top: 0;
+    bottom: auto;
+    background: linear-gradient(to bottom, #050505 0%, transparent 100%) !important;
+  }
+
+  .exp-text-col {
+    padding: 3rem 2rem;
+  }
+  
+  .row-odd .exp-text-col {
+    justify-content: flex-start;
+  }
+}
