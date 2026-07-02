@@ -7,16 +7,18 @@ import './App.css';
 // Components
 import Header from './components/Header';
 
-// Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import ExperiencesPage from './pages/ExperiencesPage';
-import GalleryPage from './pages/GalleryPage';
-import Contact from './pages/Contact';
-import Store from './pages/Store';
-import Blog from './pages/Blog';
-import Admin from './pages/Admin';
-import BookingPage from './pages/BookingPage';
+import { Suspense, lazy } from 'react';
+
+// Lazy loaded Pages
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const ExperiencesPage = lazy(() => import('./pages/ExperiencesPage'));
+const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Store = lazy(() => import('./pages/Store'));
+const Blog = lazy(() => import('./pages/Blog'));
+const Admin = lazy(() => import('./pages/Admin'));
+const BookingPage = lazy(() => import('./pages/BookingPage'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,17 +48,19 @@ function App() {
         <ScrollToTop />
         <SiteHeader />
         <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/experiences" element={<ExperiencesPage />} />
-            <Route path="/booking/:id" element={<BookingPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/store" element={<Store />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
+          <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/experiences" element={<ExperiencesPage />} />
+              <Route path="/booking/:id" element={<BookingPage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/store" element={<Store />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/admin" element={<Admin />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </Router>

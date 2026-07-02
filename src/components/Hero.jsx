@@ -40,6 +40,9 @@ const slides = [
 
 const StopMotionImage = () => {
   const [stopMotionIdx, setStopMotionIdx] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const imgRef = useRef(null);
+  
   const stopMotionImages = [
     "/stopmotion/hf_20260620_175328_863b0046-d185-4683-be5c-bca254aa0e1e.webp",
     "/stopmotion/hf_20260620_180357_da1d57c2-c9b9-4914-874b-e293537bf9f6.webp",
@@ -49,13 +52,20 @@ const StopMotionImage = () => {
   ];
 
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting));
+    if (imgRef.current) observer.observe(imgRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
       setStopMotionIdx(prev => (prev + 1) % stopMotionImages.length);
     }, 400);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
-  return <img src={stopMotionImages[stopMotionIdx]} alt="Stop motion frame" className="stopmotion-img" />;
+  return <img ref={imgRef} src={stopMotionImages[stopMotionIdx]} alt="Stop motion frame" className="stopmotion-img" loading="lazy" />;
 };
 
 const Hero = () => {
@@ -181,6 +191,7 @@ const Hero = () => {
                   loop 
                   muted 
                   playsInline
+                  preload={index === 0 ? "auto" : "none"}
                   src={slide.bgVideo}
                 />
               )}
@@ -225,6 +236,8 @@ const Hero = () => {
                         src={slide.img} 
                         alt={slide.title} 
                         className="hero-character-img"
+                        fetchPriority={index === 0 ? "high" : "auto"}
+                        loading={index === 0 ? "eager" : "lazy"}
                       />
                     </div>
                   </div>
