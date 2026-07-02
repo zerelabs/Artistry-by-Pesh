@@ -1,24 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense, lazy } from 'react';
 import Hero from '../components/Hero';
-import WhyUs from '../components/WhyUs';
 import ScrollBrush from '../components/ScrollBrush';
+
+const WhyUs = lazy(() => import('../components/WhyUs'));
 
 const Home = () => {
   const homeRef = useRef(null);
+  const rafRef = useRef(null);
 
   const handleMouseMove = (e) => {
     if (!homeRef.current) return;
-    const x = (e.clientX / window.innerWidth - 0.5) * 2;
-    const y = (e.clientY / window.innerHeight - 0.5) * 2;
     
-    // Set variables for individual elements
-    homeRef.current.style.setProperty('--rotY', `${x * 15}deg`);
-    homeRef.current.style.setProperty('--rotX', `${y * -15}deg`);
-    homeRef.current.style.setProperty('--textRotY', `${x * -5}deg`);
-    homeRef.current.style.setProperty('--textRotX', `${y * 5}deg`);
+    // Throttle via requestAnimationFrame to avoid main-thread thrashing
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    
+    rafRef.current = requestAnimationFrame(() => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      
+      // Set variables for individual elements
+      homeRef.current.style.setProperty('--rotY', `${x * 15}deg`);
+      homeRef.current.style.setProperty('--rotX', `${y * -15}deg`);
+      homeRef.current.style.setProperty('--textRotY', `${x * -5}deg`);
+      homeRef.current.style.setProperty('--textRotX', `${y * 5}deg`);
+    });
   };
 
   const handleMouseLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
     if (!homeRef.current) return;
     homeRef.current.style.setProperty('--rotY', '0deg');
     homeRef.current.style.setProperty('--rotX', '0deg');
@@ -36,7 +49,9 @@ const Home = () => {
     >
       <ScrollBrush />
       <Hero />
-      <WhyUs />
+      <Suspense fallback={null}>
+        <WhyUs />
+      </Suspense>
     </div>
   );
 };

@@ -194,7 +194,7 @@ const Hero = () => {
                   loop 
                   muted 
                   playsInline
-                  preload={index === 0 ? "auto" : "none"}
+                  preload="none"
                   poster={slide.poster}
                   src={slide.bgVideo}
                 />
