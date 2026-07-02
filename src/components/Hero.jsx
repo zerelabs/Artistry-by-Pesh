@@ -78,100 +78,120 @@ const Hero = () => {
   const activeSlideRef = useRef(0);
 
   useEffect(() => {
-    if (!triggerRef.current || !pinRef.current) return;
+    if (!triggerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      // Set initial states for slides 1, 2, 3 (Slide 0 is the starting state)
-      gsap.set('.slide-1 .hero-anim-content, .slide-2 .hero-anim-content, .slide-3 .hero-anim-content', { 
-        scale: 0.8, 
-        autoAlpha: 0 
-      });
+    // We will use standard React state to track active slide, 
+    // but GSAP to animate the DOM directly for maximum performance.
+    
+    // Set initial styles
+    gsap.set('.slide-1 .hero-anim-content, .slide-2 .hero-anim-content, .slide-3 .hero-anim-content', { 
+      scale: 0.8, 
+      autoAlpha: 0 
+    });
+    
+    // All background videos except the first one should be hidden initially
+    gsap.set('.slide-1 .slide-bg, .slide-2 .slide-bg, .slide-3 .slide-bg', { 
+      autoAlpha: 0 
+    });
 
-      const tl = gsap.timeline({
-        defaults: { ease: 'none' }, // Fixes "jerky" transitions by removing internal easing curves
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          pin: pinRef.current,
-          start: "top top",
-          end: "+=200%", // Much shorter scroll distance for faster transitions
-          scrub: 0.4, // Lower scrub means less lag, snappier feel
-          snap: {
-            snapTo: 1 / 3, // Snap exactly to each of the 4 slides
-            duration: 0.4, // Faster snap animation
-            delay: 0.05, // Snap sooner after scroll stops
-            ease: "power2.inOut"
-          }
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    // Helper to transition slides
+    const gotoSlide = (newIndex) => {
+      if (isAnimating) return;
+      if (newIndex < 0 || newIndex >= slides.length) {
+        // If we try to scroll past the last slide, unpin and let the page scroll normally
+        if (newIndex >= slides.length) {
+          document.body.style.overflow = 'auto'; // Release scroll lock
         }
-      });
+        return;
+      }
+      
+      isAnimating = true;
+      const oldIndex = currentIndex;
+      currentIndex = newIndex;
 
-      // We have 4 slides. Transitions are 0->1, 1->2, 2->3.
-      // We'll use absolute time values in the timeline: 0, 1, 2 to sequence them evenly.
-
-      // Transition 1 (Slide 0 -> Slide 1)
-      tl.to('.slide-0 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 0)
-        .to('.slide-0 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 0)
-        .to('.slide-0 .hero-footer', { autoAlpha: 0, duration: 1 }, 0)
-        .to('.slide-0 .slide-bg', { autoAlpha: 0, duration: 1 }, 0)
-        // Reveal Slide 1
-        .to('.slide-1 .hero-anim-content', { scale: 1, autoAlpha: 1, duration: 1 }, 0);
-
-      // Transition 2 (Slide 1 -> Slide 2)
-      tl.to('.slide-1 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 1)
-        .to('.slide-1 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 1)
-        .to('.slide-1 .hero-footer', { autoAlpha: 0, duration: 1 }, 1)
-        .to('.slide-1 .slide-bg', { autoAlpha: 0, duration: 1 }, 1)
-        // Reveal Slide 2
-        .to('.slide-2 .hero-anim-content', { scale: 1, autoAlpha: 1, duration: 1 }, 1);
-
-      // Transition 3 (Slide 2 -> Slide 3)
-      tl.to('.slide-2 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 2)
-        .to('.slide-2 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 2)
-        .to('.slide-2 .hero-footer', { autoAlpha: 0, duration: 1 }, 2)
-        .to('.slide-2 .slide-bg', { autoAlpha: 0, duration: 1 }, 2)
-        // Reveal Slide 3
-        .to('.slide-3 .hero-anim-content', { scale: 1, autoAlpha: 1, duration: 1 }, 2);
-
-      // Start the very first video initially
-      if (videoRefs.current[0]) {
-        videoRefs.current[0].currentTime = 0;
-        videoRefs.current[0].play().catch(() => {});
+      // Play new video, pause old
+      if (videoRefs.current[oldIndex]) videoRefs.current[oldIndex].pause();
+      if (videoRefs.current[newIndex]) {
+        videoRefs.current[newIndex].currentTime = 0;
+        videoRefs.current[newIndex].play().catch(()=>{});
       }
 
-      // Sync video playback with the scroll progress!
-      tl.eventCallback("onUpdate", function() {
-        const progress = this.progress(); 
-        // Math.round means the next video triggers when we are 50% scrolled into it
-        let activeIndex = Math.round(progress * (slides.length - 1));
-        if (activeIndex >= slides.length) activeIndex = slides.length - 1;
-
-        if (activeSlideRef.current !== activeIndex) {
-          // Pause the old video
-          const oldVid = videoRefs.current[activeSlideRef.current];
-          if (oldVid) oldVid.pause();
-
-          activeSlideRef.current = activeIndex;
-          
-          // Restart the new video from the beginning and play it
-          const newVid = videoRefs.current[activeIndex];
-          if (newVid) {
-            newVid.currentTime = 0;
-            newVid.play().catch(()=>{});
-          }
+      const tl = gsap.timeline({
+        onComplete: () => {
+          isAnimating = false;
         }
       });
 
-    }, triggerRef);
+      // 1. Crossfade the backgrounds
+      tl.to(`.slide-${oldIndex} .slide-bg`, { autoAlpha: 0, duration: 1, ease: 'power2.inOut' }, 0);
+      tl.to(`.slide-${newIndex} .slide-bg`, { autoAlpha: 1, duration: 1, ease: 'power2.inOut' }, 0);
 
-    return () => ctx.revert();
+      // 2. Animate out the old content (Epic Zoom Out)
+      tl.to(`.slide-${oldIndex} .hero-character-wrapper`, { scale: 5, autoAlpha: 0, duration: 1, ease: 'power2.inOut' }, 0);
+      tl.to(`.slide-${oldIndex} .hero-massive-text`, { scale: 2, autoAlpha: 0, duration: 1, ease: 'power2.inOut' }, 0);
+      tl.to(`.slide-${oldIndex} .hero-footer`, { autoAlpha: 0, duration: 1, ease: 'power2.inOut' }, 0);
+      
+      // If the old slide was the custom final slide, fade it out
+      if (slides[oldIndex].isCustomLayout) {
+         tl.to(`.slide-${oldIndex} .hero-anim-content`, { autoAlpha: 0, scale: 2, duration: 1, ease: 'power2.inOut' }, 0);
+      }
+
+      // 3. Animate in the new content
+      tl.fromTo(`.slide-${newIndex} .hero-anim-content`, 
+        { scale: 0.8, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 1, ease: 'power2.out' }, 
+        0.2 // slight delay so it comes in after the zoom starts
+      );
+    };
+
+    // Initial video play
+    if (videoRefs.current[0]) {
+      videoRefs.current[0].currentTime = 0;
+      videoRefs.current[0].play().catch(() => {});
+    }
+
+    // Register and create GSAP Observer for cross-device support (wheel, touch, pointer)
+    const observer = gsap.core.globals().Observer || gsap.plugins.Observer;
+    // Actually, ScrollTrigger has a built-in observe method!
+    const intentObserver = ScrollTrigger.observe({
+      target: window,
+      type: "wheel,touch,pointer",
+      preventDefault: false, // We'll handle this manually
+      onChange: (self) => {
+        if (window.scrollY <= 10) {
+          
+          if (currentIndex < slides.length - 1 || (currentIndex === slides.length - 1 && self.deltaY < 0)) {
+            document.body.style.overflow = 'hidden'; 
+          }
+
+          if (self.deltaY > 20) {
+            gotoSlide(currentIndex + 1);
+          } else if (self.deltaY < -20) {
+            gotoSlide(currentIndex - 1);
+          }
+        } else if (self.deltaY < 0 && window.scrollY <= 20) {
+          document.body.style.overflow = 'hidden';
+          gotoSlide(slides.length - 1);
+        }
+      }
+    });
+
+    return () => {
+      intentObserver.kill();
+      document.body.style.overflow = 'auto'; 
+    };
   }, []);
 
   return (
     <section 
       ref={triggerRef} 
       className="hero-trigger" 
-      style={{ position: 'relative', zIndex: 1 }}
+      style={{ position: 'relative', zIndex: 1, height: '100vh', overflow: 'hidden' }}
     >
-      <div ref={pinRef} className="hero-pinned-container">
+      <div className="hero-pinned-container" style={{ height: '100%' }}>
         
 
       {/* Stacked Slides */}
@@ -194,7 +214,7 @@ const Hero = () => {
                   loop 
                   muted 
                   playsInline
-                  preload="none"
+                  preload="auto"
                   poster={slide.poster}
                   src={slide.bgVideo}
                 />

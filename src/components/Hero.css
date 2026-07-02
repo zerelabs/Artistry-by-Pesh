@@ -5,6 +5,7 @@
   min-height: 700px;
   overflow: hidden;
   border-radius: 40px;
+  touch-action: none;
 }
 
 .hero-slides-wrapper {
