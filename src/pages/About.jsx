@@ -119,7 +119,7 @@ const About = () => {
 
       {/* Decorative Tree overlapping the bottom edge */}
       <div className="about-tree-divider">
-        <img src="/images/about/tree_branch.png?v=1" alt="Decorative tree branch" className="tree-branch-img" />
+        <img src="/images/about/tree_branch.png?v=2" alt="Decorative tree branch" className="tree-branch-img" />
         <video 
           ref={butterflyVideoRef}
           className="tree-butterflies-video"
