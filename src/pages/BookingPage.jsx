@@ -120,7 +120,7 @@ export default function BookingPage() {
 
     const finalPrice = workshop.price - (workshop.price * (discount / 100));
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || "YOUR_RAZORPAY_TEST_KEY", // Enter the Key ID generated from the Dashboard
         amount: Math.round(finalPrice * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -167,9 +167,34 @@ export default function BookingPage() {
         }
       };
 
+      // Dynamically load Razorpay script
+      const loadRazorpay = () => {
+        return new Promise((resolve) => {
+          if (window.Razorpay) {
+            resolve(true);
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+          script.onload = () => {
+            resolve(true);
+          };
+          script.onerror = () => {
+            resolve(false);
+          };
+          document.body.appendChild(script);
+        });
+      };
+
+      const isLoaded = await loadRazorpay();
+      if (!isLoaded) {
+        throw new Error("Failed to load payment gateway");
+      }
+
       const rzp1 = new window.Razorpay(options);
       rzp1.on('payment.failed', function (response){
-        alert("Payment Failed: " + response.error.description);
+        console.error("Payment Failed:", response.error);
+        alert(`Payment failed: ${response.error.description}`);
       });
       rzp1.open();
       setProcessing(false);
