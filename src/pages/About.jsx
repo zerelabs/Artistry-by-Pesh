@@ -107,10 +107,9 @@ const About = () => {
         <div className="about-header-spacing"></div>
 
         <div className="about-hero-video-container">
-          {/* Video plays absolutely behind the mask */}
           <video 
-            className="about-hero-video"
-            src="/images/about/about_page_video.mov" 
+            className="about-hero-video" 
+            src="/images/about/about_page_video_optimized.webm" 
             autoPlay 
             loop 
             muted 
@@ -124,7 +123,7 @@ const About = () => {
         <video 
           ref={butterflyVideoRef}
           className="tree-butterflies-video"
-          src="/images/about/butterflies_loop.webm?v=1" 
+          src="/images/about/butterflies_loop_optimized.webm?v=1" 
           autoPlay 
           loop 
           muted 
@@ -147,7 +146,7 @@ const About = () => {
         {/* Card 2 */}
         <TiltCard className="panel-2 reverse-layout">
           <div className="card-bg-glow purple"></div>
-          <img src="/images/about/pesh-profile.png" className="pop-out-art img-right" alt="Founder Portrait" />
+          <img src="/images/about/pesh-profile_optimized.webp" className="pop-out-art img-right" alt="Founder Portrait" />
           <div className="card-content pop-out-text left-align">
             <h2>The Studio</h2>
             <p>We stripped away the intimidating galleries and strict techniques to create a sanctuary where expression takes precedence over perfection.</p>
@@ -171,7 +170,7 @@ const About = () => {
       <div className="about-bottom-video-section">
         <video 
           className="bottom-full-canvas-video"
-          src="/images/about/paint-splatter-transparent.webm"
+          src="/images/about/paint-splatter-transparent_optimized.webm"
           autoPlay 
           loop 
           muted 
