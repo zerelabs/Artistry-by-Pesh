@@ -109,7 +109,7 @@ const About = () => {
         <div className="about-hero-video-container">
           <video 
             className="about-hero-video" 
-            src="/images/about/about_page_video_optimized.webm" 
+            src="/images/about/about_page_video_new.mp4" 
             autoPlay 
             loop 
             muted 
