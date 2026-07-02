@@ -93,12 +93,12 @@ const Hero = () => {
           trigger: triggerRef.current,
           pin: pinRef.current,
           start: "top top",
-          end: "+=300%", // Shorter scroll distance
-          scrub: 1, // Faster scrub response
+          end: "+=200%", // Much shorter scroll distance for faster transitions
+          scrub: 0.4, // Lower scrub means less lag, snappier feel
           snap: {
             snapTo: 1 / 3, // Snap exactly to each of the 4 slides
-            duration: 0.8,
-            delay: 0.1,
+            duration: 0.4, // Faster snap animation
+            delay: 0.05, // Snap sooner after scroll stops
             ease: "power2.inOut"
           }
         }
@@ -108,24 +108,24 @@ const Hero = () => {
       // We'll use absolute time values in the timeline: 0, 1, 2 to sequence them evenly.
 
       // Transition 1 (Slide 0 -> Slide 1)
-      tl.to('.slide-0 .hero-character-wrapper', { scale: 5, autoAlpha: 0, duration: 1 }, 0)
-        .to('.slide-0 .hero-massive-text', { scale: 2, autoAlpha: 0, duration: 1 }, 0)
+      tl.to('.slide-0 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 0)
+        .to('.slide-0 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 0)
         .to('.slide-0 .hero-footer', { autoAlpha: 0, duration: 1 }, 0)
         .to('.slide-0 .slide-bg', { autoAlpha: 0, duration: 1 }, 0)
         // Reveal Slide 1
         .to('.slide-1 .hero-anim-content', { scale: 1, autoAlpha: 1, duration: 1 }, 0);
 
       // Transition 2 (Slide 1 -> Slide 2)
-      tl.to('.slide-1 .hero-character-wrapper', { scale: 5, autoAlpha: 0, duration: 1 }, 1)
-        .to('.slide-1 .hero-massive-text', { scale: 2, autoAlpha: 0, duration: 1 }, 1)
+      tl.to('.slide-1 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 1)
+        .to('.slide-1 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 1)
         .to('.slide-1 .hero-footer', { autoAlpha: 0, duration: 1 }, 1)
         .to('.slide-1 .slide-bg', { autoAlpha: 0, duration: 1 }, 1)
         // Reveal Slide 2
         .to('.slide-2 .hero-anim-content', { scale: 1, autoAlpha: 1, duration: 1 }, 1);
 
       // Transition 3 (Slide 2 -> Slide 3)
-      tl.to('.slide-2 .hero-character-wrapper', { scale: 5, autoAlpha: 0, duration: 1 }, 2)
-        .to('.slide-2 .hero-massive-text', { scale: 2, autoAlpha: 0, duration: 1 }, 2)
+      tl.to('.slide-2 .hero-character-wrapper', { scale: 1.5, autoAlpha: 0, duration: 1 }, 2)
+        .to('.slide-2 .hero-massive-text', { scale: 1.2, autoAlpha: 0, duration: 1 }, 2)
         .to('.slide-2 .hero-footer', { autoAlpha: 0, duration: 1 }, 2)
         .to('.slide-2 .slide-bg', { autoAlpha: 0, duration: 1 }, 2)
         // Reveal Slide 3
