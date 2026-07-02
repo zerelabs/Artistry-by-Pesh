@@ -11,7 +11,7 @@ const slides = [
     name: "CREATE",
     title: "Create",
     desc: "Every masterpiece begins with a single brushstroke. Turn your vision into reality.",
-    bgVideo: "/hero/bgs/01_opt.mp4",
+    bgVideo: "/hero/bgs/01_new.mp4",
     poster: "/hero/bgs/01_poster.webp",
     img: "/hero/Create.webp"
   },
@@ -20,7 +20,7 @@ const slides = [
     name: "EXPRESS",
     title: "Express",
     desc: "Turn emotions into beautiful memories. Let your colors flow freely and authentically.",
-    bgVideo: "/hero/bgs/02_opt.mp4",
+    bgVideo: "/hero/bgs/02_new.mp4",
     poster: "/hero/bgs/02_poster.webp",
     img: "/hero/Express.webp"
   },
@@ -29,7 +29,7 @@ const slides = [
     name: "ENJOY",
     title: "Enjoy",
     desc: "Celebrate creativity together. A place where art becomes a shared experience.",
-    bgVideo: "/hero/bgs/03.mp4",
+    bgVideo: "/hero/bgs/03_new.mp4",
     poster: "/hero/bgs/03_poster.webp",
     img: "/hero/Enjoy.webp"
   },
