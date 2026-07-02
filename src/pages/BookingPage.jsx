@@ -3,6 +3,63 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './BookingPage.css';
 
+const fallbackWorkshops = [
+  {
+    id: '1',
+    title: 'Paint & Coffee',
+    description: 'A relaxing morning session blending the rich aromas of coffee with the creative flow of painting.',
+    price: 1299,
+    image_url: '/images/experiences/exp_coffee_1782340955733.png',
+    available_seats: 10,
+    total_seats: 10
+  },
+  {
+    id: '2',
+    title: 'Couple Paint Night',
+    description: 'An intimate evening designed for two. Create a shared masterpiece while enjoying a romantic, moody atmosphere.',
+    price: 2999,
+    image_url: '/images/experiences/exp_couple_1782340967267.png',
+    available_seats: 8,
+    total_seats: 8
+  },
+  {
+    id: '3',
+    title: 'Family Art Day',
+    description: 'A vibrant, messy, and joyful session where families bond over colors and create lasting memories together.',
+    price: 4999,
+    image_url: '/images/experiences/exp_family_1782340980515.png',
+    available_seats: 15,
+    total_seats: 15
+  },
+  {
+    id: '4',
+    title: 'Birthday Art Party',
+    description: 'Throw the most colorful party of the year. Music, laughter, and a personalized painting experience for you and your friends.',
+    price: 24999,
+    image_url: '/images/experiences/exp_birthday_1782340994906.png',
+    available_seats: 20,
+    total_seats: 20
+  },
+  {
+    id: '5',
+    title: 'Corporate Art Therapy',
+    description: 'Break the routine. Our corporate sessions are designed to foster team collaboration, relieve stress, and spark innovation.',
+    price: 29999,
+    image_url: '/images/experiences/exp_corporate_1782341007227.png',
+    available_seats: 30,
+    total_seats: 30
+  },
+  {
+    id: '6',
+    title: 'Kids Creative Club',
+    description: 'A safe, encouraging space for children to explore primary colors, textures, and their endless imagination.',
+    price: 999,
+    image_url: '/images/experiences/exp_kids_1782341019209.png',
+    available_seats: 12,
+    total_seats: 12
+  }
+];
+
 export default function BookingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,11 +72,24 @@ export default function BookingPage() {
 
   useEffect(() => {
     async function fetchWorkshop() {
-      const { data, error } = await supabase.from('workshops').select('*').eq('id', id).single();
+      let data = null;
+      let error = null;
+      
+      // Prevent Supabase from throwing a UUID malformed error if id is '1', '2', etc.
+      if (id.length > 5) {
+        const res = await supabase.from('workshops').select('*').eq('id', id).single();
+        data = res.data;
+        error = res.error;
+      }
       
       if (error || !data) {
-        alert("Workshop not found.");
-        navigate('/experiences');
+        const fallback = fallbackWorkshops.find(w => w.id === String(id));
+        if (fallback) {
+          setWorkshop(fallback);
+        } else {
+          alert("Workshop not found.");
+          navigate('/experiences');
+        }
       } else {
         setWorkshop(data);
       }
@@ -59,6 +129,13 @@ export default function BookingPage() {
         description: `Booking: ${workshop.title}`,
         image: "/images/logo.png",
         handler: async function (response) {
+          // If this is a fallback workshop (id is short like '1'), skip DB insertion entirely
+          if (String(workshop.id).length < 5) {
+            alert("Payment successful! Your booking is confirmed. (Demo Mode)");
+            navigate('/experiences');
+            return;
+          }
+
           // 2. On Success, insert booking into DB
           // In prod, this happens securely via Webhook
           const { error } = await supabase.from('bookings').insert([{
