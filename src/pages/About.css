@@ -59,7 +59,6 @@
   transform: translate(-50%, -65%); /* Pulled slightly higher than center to match the new shape */
   pointer-events: none; /* Stops it from blocking clicks on the video if any */
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
-  mix-blend-mode: screen;
 }
 
 .tree-butterflies-video {
