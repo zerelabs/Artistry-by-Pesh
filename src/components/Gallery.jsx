@@ -1,6 +1,6 @@
 import React, { useRef, useState, Suspense, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useTexture, ScrollControls, useScroll, Text, Float } from '@react-three/drei';
+import { useTexture, ScrollControls, useScroll, Text, Float, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 // --- PHASE 1 ARTWORKS ---
@@ -290,11 +290,20 @@ const CameraRig = () => {
   return null;
 };
 
-// Loading component
+// Loading component using Html to avoid suspending inside a Suspense fallback
 const Loader = () => (
-  <Text fontSize={0.5} color="#FFC857" position={[0, 0, 0]}>
-    Preparing Gallery Experience...
-  </Text>
+  <Html center>
+    <div style={{ 
+      color: '#FFC857', 
+      fontSize: '1.2rem', 
+      whiteSpace: 'nowrap', 
+      fontFamily: 'sans-serif',
+      letterSpacing: '2px',
+      textTransform: 'uppercase'
+    }}>
+      Preparing Gallery Experience...
+    </div>
+  </Html>
 );
 
 const Gallery = () => {
