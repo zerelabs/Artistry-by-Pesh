@@ -103,7 +103,7 @@ const About = () => {
       <div className="space-dust-bg"></div>
 
       {/* Foreground Content Wrapper to guarantee it sits above the background video */}
-      <div style={{ position: 'relative', zIndex: 10 }}>
+      <div style={{ position: 'relative' }}>
         <div className="about-header-spacing"></div>
 
         <div className="about-hero-video-container">
