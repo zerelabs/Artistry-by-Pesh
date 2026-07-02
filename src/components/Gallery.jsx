@@ -272,9 +272,12 @@ const CameraRig = () => {
     
     // Y movement happens in Phase 2 (descend from 0 to -30)
     const targetYBase = phase2 * -30;
+    
+    const isMobile = window.innerWidth < 768;
+    const baseZ = isMobile ? 12 : 5; // Pull back further on mobile so portraits fit
 
     // Smooth camera movement
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + 5, 0.1);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ + baseZ, 0.1);
     
     // Parallax
     const targetX = (mouse.x * 2);

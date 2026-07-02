@@ -117,3 +117,89 @@
   background: var(--color-coral-pink);
   color: #fff;
 }
+
+/* --- MOBILE RESPONSIVENESS --- */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1001; /* Above the mobile nav overlay */
+}
+
+.hamburger-menu span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--color-cream-white);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.header-light .hamburger-menu span {
+  background-color: #0A0A0A;
+}
+.header-light.scrolled .hamburger-menu span {
+  background-color: #0A0A0A;
+}
+.header:not(.header-light) .hamburger-menu span {
+  background-color: var(--color-cream-white);
+}
+
+.hamburger-menu.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+  background-color: var(--color-cream-white); /* Always light inside menu */
+}
+
+.hamburger-menu.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+  background-color: var(--color-cream-white); /* Always light inside menu */
+}
+
+@media (max-width: 900px) {
+  .hamburger-menu {
+    display: flex;
+  }
+  
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75vw;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .header-light .nav-links a {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  .header-light .nav-links a:hover,
+  .header-light .nav-links a.active {
+    color: var(--color-coral-pink) !important;
+  }
+}

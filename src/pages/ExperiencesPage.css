@@ -211,4 +211,8 @@
   .row-odd .exp-text-col {
     justify-content: flex-start;
   }
+  
+  .exp-title {
+    font-size: 2.5rem;
+  }
 }

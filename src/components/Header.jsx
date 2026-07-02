@@ -4,6 +4,7 @@ import './Header.css';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isLightMode = location.pathname === '/';
 
@@ -15,13 +16,25 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when navigating
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''} ${isLightMode ? 'header-light' : ''}`}>
       <div className="header-container">
         <Link to="/" className="logo">
           <img src="/images/logo_optimized.png" alt="Artistry by Pesh" className="header-logo-img" />
         </Link>
-        <nav className="nav-links">
+        
+        <div className={`hamburger-menu ${isMobileMenuOpen ? 'open' : ''}`} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <nav className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink>
           <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink>
           <NavLink to="/experiences" className={({ isActive }) => (isActive ? 'active' : '')}>Experiences</NavLink>

@@ -210,3 +210,24 @@
   background: #ff4b4b;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .admin-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+  .admin-form textarea, .admin-form button {
+    grid-column: span 1;
+  }
+  .admin-layout {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
