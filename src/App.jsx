@@ -44,7 +44,13 @@ const SiteHeader = () => {
 
 const SiteFooter = () => {
   const { pathname } = useLocation();
-  if (pathname.startsWith('/admin')) return null;
+  if (
+    pathname.startsWith('/admin') || 
+    pathname.startsWith('/store') || 
+    pathname.startsWith('/gallery')
+  ) {
+    return null;
+  }
   return <Footer />;
 };
 
