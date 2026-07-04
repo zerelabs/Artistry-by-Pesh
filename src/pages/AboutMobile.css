@@ -158,6 +158,9 @@
   z-index: 50;
   margin-top: -80px; /* Slight overlap with the last card */
   pointer-events: none;
+  isolation: isolate; /* Create a new stacking context for Safari mix-blend-mode */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .mobile-bottom-full-canvas-video {
@@ -165,4 +168,7 @@
   height: auto;
   object-fit: cover;
   mix-blend-mode: screen;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }

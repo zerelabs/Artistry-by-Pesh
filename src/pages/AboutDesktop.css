@@ -219,6 +219,9 @@
   display: flex;
   z-index: 50; /* Forces it to the foreground, on top of the cards */
   pointer-events: none;
+  isolation: isolate;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
 }
 
 .bottom-full-canvas-video {
@@ -228,6 +231,9 @@
   object-fit: cover;
   pointer-events: none;
   mix-blend-mode: screen;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 @media (max-width: 900px) {
