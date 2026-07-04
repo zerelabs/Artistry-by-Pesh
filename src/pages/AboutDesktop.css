@@ -222,6 +222,8 @@
   mix-blend-mode: screen; /* MUST be on the parent that creates the stacking context */
   -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
 }
 
 .bottom-full-canvas-video {
