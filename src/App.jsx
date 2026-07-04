@@ -6,6 +6,7 @@ import './App.css';
 
 // Components
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 import { Suspense, lazy } from 'react';
 
@@ -41,6 +42,12 @@ const SiteHeader = () => {
   return <Header />;
 };
 
+const SiteFooter = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/admin')) return null;
+  return <Footer />;
+};
+
 function App() {
   return (
     <Router>
@@ -62,6 +69,7 @@ function App() {
             </Routes>
           </Suspense>
         </main>
+        <SiteFooter />
       </div>
     </Router>
   );
