@@ -1,0 +1,211 @@
+.hero-mobile-container {
+  width: 100%;
+  /* Use scroll snapping for a premium feel on mobile */
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  background-color: #000;
+}
+
+.hero-mobile-slide {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mobile-bg-wrapper {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mobile-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-content-wrapper {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.mobile-massive-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: 25vw;
+  font-weight: 900;
+  color: #ffffff;
+  opacity: 0.8;
+  margin: 0;
+  line-height: 0.8;
+  white-space: nowrap;
+  letter-spacing: -0.05em;
+  z-index: 1;
+  mix-blend-mode: overlay; 
+}
+
+.mobile-character-container {
+  position: absolute;
+  bottom: 120px; /* Leave room for footer */
+  left: 0;
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 5;
+}
+
+.mobile-character-img {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  mix-blend-mode: multiply;
+  filter: contrast(1.1) brightness(1.05) drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+}
+
+.mobile-footer {
+  padding: 1.5rem;
+  padding-bottom: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  z-index: 10;
+  position: relative;
+}
+
+.mobile-footer h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-footer p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* Final Mobile Slide */
+.final-mobile-slide {
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  gap: 2rem;
+}
+
+.mobile-final-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+}
+
+.mobile-final-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.mobile-final-heading span {
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 2px 0;
+}
+
+.text-create { background-image: linear-gradient(to right, #ff9933, #ff3366); }
+.text-express { background-image: linear-gradient(to right, #cc33ff, #ff3366); }
+.text-enjoy { background-image: linear-gradient(to right, #33ccff, #0066cc); }
+
+.mobile-final-subtext {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.script-pink {
+  font-family: 'Dancing Script', cursive;
+  color: #ff3366;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.script-blue {
+  font-family: 'Dancing Script', cursive;
+  color: #33ccff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.mobile-final-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.mobile-btn-book {
+  background: linear-gradient(to right, #ff9933, #cc33ff);
+  color: #fff;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mobile-btn-gallery {
+  background: transparent;
+  color: #D4AF37;
+  border: 1px solid #D4AF37;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mobile-final-portrait {
+  width: 100%;
+  height: 35svh;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.mobile-stopmotion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
