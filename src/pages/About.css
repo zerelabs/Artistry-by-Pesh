@@ -227,6 +227,7 @@
   max-height: 80vh;
   object-fit: cover;
   pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 @media (max-width: 900px) {
