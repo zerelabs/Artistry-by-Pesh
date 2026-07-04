@@ -219,7 +219,7 @@
   display: flex;
   z-index: 50; /* Forces it to the foreground, on top of the cards */
   pointer-events: none;
-  isolation: isolate;
+  mix-blend-mode: screen; /* MUST be on the parent that creates the stacking context */
   -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
 }
@@ -230,10 +230,6 @@
   max-height: 80vh;
   object-fit: cover;
   pointer-events: none;
-  mix-blend-mode: screen;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 @media (max-width: 900px) {
