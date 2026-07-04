@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 
 export function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(false);
+  // Initialize synchronously if window exists to prevent layout shifts
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= breakpoint;
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // Only run on client
     if (typeof window === 'undefined') return;
 
     const checkIsMobile = () => {

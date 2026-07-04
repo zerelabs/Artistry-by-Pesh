@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import { useIsMobile } from '../hooks/useIsMobile';
 gsap.registerPlugin(ScrollTrigger);
 
 const ScrollBrush = () => {
+  const isMobile = useIsMobile(768);
   const pathRef = useRef(null);
   const canvasRef = useRef(null);
   
@@ -109,7 +110,7 @@ const ScrollBrush = () => {
     };
   }, [dimensions]);
 
-  if (dimensions.height === 0) return null;
+  if (dimensions.height === 0 || isMobile) return null;
 
   const w = dimensions.width;
   const h = dimensions.height;
